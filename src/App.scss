@@ -230,8 +230,22 @@ div#loaf-bg {
     background-image: none !important;
 }
 
+
+
+@media screen and (min-width: 600px){
+    .mobile-divider { display: none; }
+}
+
 .loaf-container {
     background-color: $white;
+
+    .header-tagline {
+        color: $loafAccentColor;
+    }
+    .header-byline {
+        color: rgba(0,0,0,.65);
+        margin-bottom:-2rem;
+    }
 
     & h1, h5, h6, p, ul, li {
         font-family: $loafFont;
@@ -403,17 +417,20 @@ div#loaf-bg {
 
     #table-of-contents {
         & h5 {
-            margin-top: 0;
+            margin-top: -2rem;
             margin-bottom: 12px;
             font-weight: 900;
         }
         & li {
-            color: $blackText;
+            color: rgba(0,0,0,.65);
             font-family: $loafFont;
+            text-decoration: underline;
+            text-decoration-style:dotted;
             font-weight: 600;
+            font-size: 1.2rem;
             &:hover {
                 color: $loafAccentColor;
-                text-decoration: underline;
+                text-decoration-color: $loafAccentColor;
             }
             &::marker {
                 content: "";

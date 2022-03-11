@@ -13,10 +13,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReactPlayer from 'react-player';
 import rehypeRaw from 'rehype-raw';
+import { useMediaQuery } from 'react-responsive'
+
 
 import Footer from 'components/Footer';
 import ReactMarkdown from 'react-markdown';
-
 
 // IMAGE REFS
 var imageList = [
@@ -117,19 +118,24 @@ class Home extends Component {
         });
     }
 
+
+
   render() {
     return (
         <div id="loaf-bg" style={{backgroundImage: `url(${loafBgImg})` }}>
             <Container maxWidth="md" className="loaf-container">
                 <Grid container spacing={2} alignItems="center" justifyContent="center" my={{md: 4, xs: 2}}>
                     <Grid item xs={12}>
-                        <Typography textAlign="center" variant="h4" mb={0} style={{"color": "#ff3a83"}}>Live, love, loaf.</Typography>
+                        <Typography textAlign="center" variant="h4" mb={0} className="header-tagline">Live, love, loaf.</Typography>
                         <Typography textAlign="center" variant="h1" mb={0}>The Loaf Life</Typography>
-                        <Typography textAlign="center" variant="h4" mb={0}>Recipes for really good no-knead sourdough bread.</Typography>
+                        <Typography textAlign="center" variant="h4" mb={0} className="header-byline">Recipes for really good no-knead sourdough bread.</Typography>
                         <Divider />
                             <Grid container spacing={2} alignItems="left" justifyContent="left">
                                 <Grid item xs={12} md={8}>
                                     <Box style={{textAlign: "center"}}><img className="loaf-image" alt="The Loaf" src={loafImg} /></Box>
+                                </Grid>
+                                <Grid item xs={12} md={0} className="mobile-divider">
+                                    <Divider />
                                 </Grid>
                                 <Grid item xs={12} md={4}>
                                     <Box style={{textAlign: "left"}} id="table-of-contents">
