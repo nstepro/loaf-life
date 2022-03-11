@@ -79,8 +79,19 @@ function anchorRender(props) {
         return (
             <a href={props.href} target="_blank">{props.children}</a>
         )
-    }
-    
+    }   
+}
+
+function createTocItem(name, tag, linkTarget) {
+    let li = document.createElement('li');
+    li.className = 'toc-'+tag;
+
+    let a = document.createElement('a');
+    a.setAttribute('href', '#'+linkTarget);
+    a.textContent = name;
+    li.appendChild(a);
+
+    return li;
 }
 
 
@@ -90,15 +101,20 @@ class Home extends Component {
     componentDidMount() {
         fetch('https://dl.dropboxusercontent.com/s/0j7nrlonusmvrht/Loaf%20Life.md?raw=1').then((response) => response.text()).then((text) => {
             this.setState({ mdText: text });
+        })
+        .then(() => {
+            var tags = document.querySelectorAll('h3,h4,h5');
+            var toc = document.querySelector('#table-of-contents');
+            for (const tag of tags) {
+                    if (tag.textContent.substring(0,3)=="[*]") {
+                        console.log(tag.textContent);
+                        tag.textContent = tag.textContent.replace("[*]", "").trim();
+                        var href = tag.textContent.replace(" ", "_").toLowerCase();
+                        tag.setAttribute('id', href);
+                        toc.appendChild(createTocItem(tag.textContent, tag.tagName, href));
+                    }
+            }
         });
-        // .then(() => {
-        //     var tags = document.getElementsByTagName("*");
-        //     for (var i=0, max=tags.length; i < max; i++) {
-        //         if ()
-        //         console.log(tags[i].tagName);
-        //         // document.getElementById("table-of-contents").append("")
-        //     }
-        // });
     }
 
   render() {
@@ -109,10 +125,21 @@ class Home extends Component {
                     <Grid item xs={12}>
                         <Typography textAlign="center" variant="h4" mb={0} style={{"color": "#ff3a83"}}>Live, love, loaf.</Typography>
                         <Typography textAlign="center" variant="h1" mb={0}>The Loaf Life</Typography>
+                        <Typography textAlign="center" variant="h4" mb={0}>Recipes for really good no-knead sourdough bread.</Typography>
                         <Divider />
-                            <Box style={{textAlign: "center"}}><img className="loaf-image" alt="The Loaf" src={loafImg} /></Box>
-                            <Box style={{textAlign: "left"}} id="table-of-contents"></Box>
+                            <Grid container spacing={2} alignItems="left" justifyContent="left">
+                                <Grid item xs={12} md={8}>
+                                    <Box style={{textAlign: "center"}}><img className="loaf-image" alt="The Loaf" src={loafImg} /></Box>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Box style={{textAlign: "left"}} id="table-of-contents">
+                                        <Typography textAlign="left" variant="h5">The Roadmap:</Typography>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                            
                         <Divider />
+                        
                     </Grid>
                 </Grid>
                 <ReactMarkdown rehypePlugins={[rehypeRaw]} children={this.state.mdText} className="markdown-holder" components={{ "img": imageRender, "blockquote": blockQuoteRender, "a": anchorRender }} />

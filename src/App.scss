@@ -232,8 +232,6 @@ div#loaf-bg {
 
 .loaf-container {
     background-color: $white;
-    // border-left: 4px solid #ff3a83;
-    // border-right: 4px solid #ff3a83;
 
     & h1, h5, h6, p, ul, li {
         font-family: $loafFont;
@@ -400,6 +398,32 @@ div#loaf-bg {
         transition: filter .4s;
         &:hover, &:focus {
             filter: saturate(1) contrast(1.3);
+        }
+    }
+
+    #table-of-contents {
+        & h5 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 900;
+        }
+        & li {
+            color: $blackText;
+            font-family: $loafFont;
+            font-weight: 600;
+            &:hover {
+                color: $loafAccentColor;
+                text-decoration: underline;
+            }
+            &::marker {
+                content: "";
+            }
+            &.toc-H4 {
+                margin-left: 1rem;
+            }
+            &.toc-H5 {
+                margin-left: 2rem;
+            }
         }
     }
 
